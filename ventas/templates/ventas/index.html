@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ventas - Tienda Puerto</title>
+</head>
+<body>
+    <h1>Últimas ventas registradas</h1>
+
+    {% if ventas %}
+        <table border="1" cellpadding="8">
+            <tr>
+                <th>ID</th>
+                <th>Producto (id)</th>
+                <th>Cantidad</th>
+                <th>Fecha</th>
+                <th></th>
+            </tr>
+            {% for venta in ventas %}
+            <tr>
+                <td>{{ venta.id }}</td>
+                <td>{{ venta.producto_id }}</td>
+                <td>{{ venta.cantidad }}</td>
+                <td>{{ venta.fecha }}</td>
+                <td><a href="{% url 'ventas:detalle' venta.id %}">Ver</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Aún no se han registrado ventas.</p>
+    {% endif %}
+</body>
+</html>

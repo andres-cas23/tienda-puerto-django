@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventario - Tienda Puerto</title>
+</head>
+<body>
+    <h1>Inventario de la tienda</h1>
+
+    {% if productos %}
+        <table border="1" cellpadding="8">
+            <tr>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th></th>
+            </tr>
+            {% for producto in productos %}
+            <tr>
+                <td>{{ producto.nombre }}</td>
+                <td>{{ producto.categoria }}</td>
+                <td>${{ producto.precio }}</td>
+                <td>{{ producto.stock }}</td>
+                <td><a href="{% url 'productos:detalle' producto.id %}">Ver detalle</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Aún no hay productos registrados en el inventario.</p>
+    {% endif %}
+</body>
+</html>
