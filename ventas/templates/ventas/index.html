@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Ventas - Tienda Puerto</title>
-</head>
-<body>
-    <h1>Últimas ventas registradas</h1>
+{% extends "base.html" %}
+{% block titulo %}Ventas - Tienda Puerto{% endblock %}
+{% block content %}
+    <h1>{{ titulo|default:"Últimas ventas registradas" }}</h1>
 
     {% if ventas %}
-        <table border="1" cellpadding="8">
+        <table>
             <tr>
                 <th>ID</th>
                 <th>Producto (id)</th>
@@ -22,12 +18,11 @@
                 <td>{{ venta.producto_id }}</td>
                 <td>{{ venta.cantidad }}</td>
                 <td>{{ venta.fecha }}</td>
-                <td><a href="{% url 'ventas:detalle' venta.id %}">Ver</a></td>
+                <td><a class="accion" href="{% url 'ventas:detalle' venta.id %}">Ver</a></td>
             </tr>
             {% endfor %}
         </table>
     {% else %}
         <p>Aún no se han registrado ventas.</p>
     {% endif %}
-</body>
-</html>
+{% endblock %}

@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ producto.nombre }} - Tienda Puerto</title>
-</head>
-<body>
-    <a href="{% url 'productos:index' %}">&larr; Volver al inventario</a>
+{% extends "base.html" %}
+{% block titulo %}{{ producto.nombre }} - Tienda Puerto{% endblock %}
+{% block content %}
+    <a class="volver" href="{% url 'productos:index' %}">&larr; Volver al inventario</a>
 
     <h1>{{ producto.nombre }}</h1>
     <p><strong>Categoría:</strong> {{ producto.categoria }}</p>
@@ -13,8 +9,13 @@
     <p><strong>Stock disponible:</strong> {{ producto.stock }}</p>
     <p><strong>Descripción:</strong> {{ producto.descripcion }}</p>
 
+<p>
+    <a href="{% url 'productos:editar' producto.id %}"><button>Editar</button></a>
+    <a href="{% url 'productos:eliminar' producto.id %}"><button style="background-color:#c62828;">Eliminar</button></a>
+</p>
+
     {% if producto.stock <= 5 %}
-        <p style="color: red;"><strong>⚠ Stock bajo, hay que reabastecer.</strong></p>
+        <p class="alerta">⚠ Stock bajo, hay que reabastecer.</p>
     {% endif %}
 
     <hr>
@@ -23,5 +24,4 @@
         <label>Cantidad: <input type="number" name="cantidad" value="1" min="1"></label>
         <button type="submit">Vender</button>
     </form>
-</body>
-</html>
+{% endblock %}

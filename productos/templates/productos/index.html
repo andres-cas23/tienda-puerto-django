@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Inventario - Tienda Puerto</title>
-</head>
-<body>
-    <h1>Inventario de la tienda</h1>
-
+{% extends "base.html" %}
+{% block titulo %}Inventario - Tienda Puerto{% endblock %}
+{% block content %}
+    <h1>{{ titulo|default:"Inventario de la tienda" }}</h1>
+    <p style="font-size: 0.85rem; color: #777;">Datos servidos por: {{ microservicio_usado }}</p>
+<p><a href="{% url 'productos:crear' %}"><button>+ Nuevo producto</button></a></p>
     {% if productos %}
-        <table border="1" cellpadding="8">
+        <table>
             <tr>
                 <th>Nombre</th>
                 <th>Categoría</th>
@@ -22,12 +19,11 @@
                 <td>{{ producto.categoria }}</td>
                 <td>${{ producto.precio }}</td>
                 <td>{{ producto.stock }}</td>
-                <td><a href="{% url 'productos:detalle' producto.id %}">Ver detalle</a></td>
+                <td><a class="accion" href="{% url 'productos:detalle' producto.id %}">Ver detalle</a></td>
             </tr>
             {% endfor %}
         </table>
     {% else %}
         <p>Aún no hay productos registrados en el inventario.</p>
     {% endif %}
-</body>
-</html>
+{% endblock %}

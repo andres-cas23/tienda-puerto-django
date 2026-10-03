@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block titulo %}Asistente IA - Tienda Puerto{% endblock %}
+{% block content %}
+    <a class="volver" href="{% url 'productos:index' %}">&larr; Volver al inventario</a>
+
+    <h1>Pregúntale a la IA sobre tu inventario</h1>
+    <p>Escribe una pregunta relacionada con la gestión de tu tienda.</p>
+
+    <form action="{% url 'productos:preguntar_ia' %}" method="get">
+        <input type="text" name="pregunta" placeholder="Escribe tu pregunta..."
+               value="{{ pregunta }}" size="50" required>
+        <button type="submit">Preguntar</button>
+    </form>
+
+    {% if respuesta_ia %}
+        <div class="caja-respuesta">
+            <p><strong>Pregunta:</strong> {{ pregunta }}</p>
+            <p><strong>Respuesta de la IA:</strong></p>
+            <p>{{ respuesta_ia }}</p>
+        </div>
+    {% endif %}
+{% endblock %}

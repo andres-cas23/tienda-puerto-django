@@ -1,17 +1,12 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Venta #{{ venta.id }} - Tienda Puerto</title>
-</head>
-<body>
-    <a href="{% url 'ventas:index' %}">&larr; Volver a ventas</a>
+{% extends "base.html" %}
+{% block titulo %}Venta #{{ venta.id }} - Tienda Puerto{% endblock %}
+{% block content %}
+    <a class="volver" href="{% url 'ventas:index' %}">&larr; Volver a ventas</a>
 
     <h1>Venta #{{ venta.id }}</h1>
     <p><strong>Producto (id):</strong> {{ venta.producto_id }}</p>
     <p><strong>Cantidad:</strong> {{ venta.cantidad }}</p>
     <p><strong>Fecha:</strong> {{ venta.fecha }}</p>
 
-    <p><a href="{% url 'productos:detalle' venta.producto_id %}">Ver producto</a></p>
-</body>
-</html>
+    <p><a class="accion" href="{% url 'productos:detalle' venta.producto_id %}">Ver producto</a></p>
+{% endblock %}

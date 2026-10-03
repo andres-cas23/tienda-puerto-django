@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block titulo %}{{ accion }} producto - Tienda Puerto{% endblock %}
+{% block content %}
+    <a class="volver" href="{% url 'productos:index' %}">&larr; Volver al inventario</a>
+
+    <h1>{{ accion }} producto</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <p>
+            <label>Nombre:<br>
+                <input type="text" name="nombre" value="{{ producto.nombre|default:'' }}" required>
+            </label>
+        </p>
+
+        <p>
+            <label>Categoría:<br>
+                <input type="text" name="categoria" value="{{ producto.categoria|default:'' }}" required>
+            </label>
+        </p>
+
+        <p>
+            <label>Precio:<br>
+                <input type="number" step="0.01" name="precio" value="{{ producto.precio|default:'' }}" required>
+            </label>
+        </p>
+
+        <p>
+            <label>Stock:<br>
+                <input type="number" name="stock" value="{{ producto.stock|default:'0' }}" required>
+            </label>
+        </p>
+
+        <p>
+            <label>Descripción:<br>
+                <input type="text" name="descripcion" value="{{ producto.descripcion|default:'' }}" size="50">
+            </label>
+        </p>
+
+        <button type="submit">Guardar</button>
+    </form>
+{% endblock %}
