@@ -1,3 +1,4 @@
+import time
 import requests
 from django.conf import settings
 
@@ -40,3 +41,34 @@ def llamar_con_resiliencia(metodo, ruta, json=None, timeout=10):
     raise ConnectionError(
         "Todos los microservicios fallaron:\n" + "\n".join(errores)
     )
+
+def verificar_estado_microservicios():
+    """
+    Revisa, uno por uno, si cada microservicio de la lista responde.
+    No usa resiliencia aquí a propósito: queremos el estado de TODOS,
+    no detenernos en el primero que funcione.
+    """
+    resultados = []
+
+    for base_url in settings.MICROSERVICIOS:
+        estado = {"url": base_url, "activo": False, "tiempo_ms": None, "detalle": ""}
+        try:
+            inicio = time.time()
+            respuesta = requests.get(f"{base_url}/productos/", timeout=6)
+            tiempo = round((time.time() - inicio) * 1000)
+
+            if respuesta.status_code < 500 and respuesta.content:
+                respuesta.json()  # valida que sea JSON real
+                estado["activo"] = True
+                estado["tiempo_ms"] = tiempo
+                estado["detalle"] = f"OK ({respuesta.status_code})"
+            else:
+                estado["detalle"] = f"Código {respuesta.status_code}"
+        except requests.exceptions.RequestException as e:
+            estado["detalle"] = e.__class__.__name__
+        except ValueError:
+            estado["detalle"] = "Respuesta sin JSON válido"
+
+        resultados.append(estado)
+
+    return resultados
