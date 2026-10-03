@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block titulo %}Estado de microservicios - Tienda Puerto{% endblock %}
+{% block content %}
+    <h1>Estado de los microservicios</h1>
+    <p>Verificación en tiempo real de los 4 microservicios que sostienen el inventario.</p>
+
+    <table>
+        <tr>
+            <th>Estado</th>
+            <th>Microservicio</th>
+            <th>Tiempo de respuesta</th>
+            <th>Detalle</th>
+        </tr>
+        {% for r in resultados %}
+        <tr>
+            <td>
+                {% if r.activo %}
+                    <span style="color: #2e7d32; font-weight: bold;">🟢 Activo</span>
+                {% else %}
+                    <span style="color: #c62828; font-weight: bold;">🔴 Caído</span>
+                {% endif %}
+            </td>
+            <td>{{ r.url }}</td>
+            <td>{% if r.tiempo_ms %}{{ r.tiempo_ms }} ms{% else %}—{% endif %}</td>
+            <td>{{ r.detalle }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p style="margin-top: 20px; font-size: 0.85rem; color: #777;">
+        Si el primer microservicio activo de esta lista falla, Django automáticamente
+        usa el siguiente que esté marcado como 🟢 Activo para seguir mostrando el inventario.
+    </p>
+{% endblock %}

@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
 from .resiliencia import llamar_con_resiliencia
+from .resiliencia import llamar_con_resiliencia, verificar_estado_microservicios
 
 
 def index(request):
@@ -177,3 +178,9 @@ def preguntar_ia(request):
 
     context = {"pregunta": pregunta, "respuesta_ia": respuesta_ia}
     return render(request, "productos/preguntar_ia.html", context)
+
+def estado_microservicios(request):
+    """Muestra el estado en tiempo real de los 4 microservicios."""
+    resultados = verificar_estado_microservicios()
+    context = {"resultados": resultados}
+    return render(request, "productos/estado.html", context)
