@@ -19,7 +19,13 @@
                 <td>{{ producto.categoria }}</td>
                 <td>${{ producto.precio }}</td>
                 <td>{{ producto.stock }}</td>
-                <td><a class="accion" href="{% url 'productos:detalle' producto.id %}">Ver detalle</a></td>
+                <td>
+                    {% if producto.id %}
+                    <a class="accion" href="{% url 'productos:detalle' producto.id %}">Ver detalle</a>
+                    {% else %}
+                    <span style="color:#999;">(sin id)</span>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </table>
